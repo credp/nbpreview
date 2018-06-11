@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IPython/Jupyter Notebook Previewer</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1">
+        <script type="text/javascript" src="js/vendor/es5-shim.min.js"></script>
+        <script type="text/javascript" src="js/vendor/marked.min.js"></script>
+        <script type="text/javascript" src="js/vendor/ansi_up.min.js"></script>
+        <script type="text/javascript" src="js/vendor/prism.min.js"></script>
+        <script type="text/javascript" src="js/vendor/notebook.min.js"></script>
+        <link rel="stylesheet" href="css/vendor/prism.css" />
+        <link rel="stylesheet" href="css/vendor/notebook.css" />
+        <link rel="stylesheet" href="css/nbpreview.css" />
+        <script src="js/nbpreview2.js"></script>
+        <style>
+		uri-input {
+		    width: 100%;
+		}
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <div id="controls">
+                <div id="header">IPython/Jupyter Notebook Previewer</div>
+            </div>
+            <div id="notebook-holder"></div>
+            <div id="uri-form-holder">
+                <form action="" method="get" action="">
+                    <label>Enter the URI for a notebook:</label>
+                    <input class="uri-input" type="url" name="nburi" ><button type="submit">Go</button>
+                </form>
+            </div>
+        </div>
+
+    <script type="text/javascript">
+    function getQueryParams(qs) {
+        qs = qs.split('+').join(' ');
+
+        var params = {}, tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+        while (tokens = re.exec(qs)) {
+            params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+        }
+        return params;
+    }
+
+    function hide_uri_form() {
+        var el = document.getElementById("uri-form-holder");
+        if (el)
+            el.style.display = "none";
+    }
+
+    function getNbUri() {
+        var query = getQueryParams(document.location.search);
+        return query.nburi;
+    }
+
+    function render_nburi() {
+	var nburi = getNbUri();
+        if (nburi) {
+            hide_uri_form();
+            open_uri(nburi);
+        }
+    }
+
+    document.addEventListener("load", render_nburi());
+    </script>
+
+    </body>
+</html>
